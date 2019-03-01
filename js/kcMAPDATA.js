@@ -9,7 +9,7 @@ var MAPDATA = {
 				bgmNN: 2,
 				bgmDB: 2,
 				bgmNB: 2,
-				bossnode: 3,
+				bossnode: [2,3],
 			},
 			2: {
 				name: '1-2',
