@@ -1,12 +1,12 @@
 var MAPDATA = {
-	20: {
-		name: 'Phase 1 Classic',
+	99: {
+		name: 'Phase 1 Revamp',
 		date: '2019-02-11',
 		diffMode: 2,
 		allowDiffs: [3],
 		allowFleets: [0,1,2,7],
-		bannerImg: 'assets/maps/20/banner1.png',
-		bannerImgAlt: 'assets/maps/20/banner2.png',
+		bannerImg: 'assets/maps/99/banner1.png',
+		bannerImgAlt: 'assets/maps/99/banner2.png',
 		allowLBAS: true,
 		newResupplyCosts: true,
 		overrideStats: {
@@ -31,9 +31,8 @@ var MAPDATA = {
 		transportCalc: function() { return 1; },
 		maps: {
 			1: {
-				name: '1-1',
+				name: 'E-1',
 				nameT: '1-1, But Harder',
-				world: 1,
 				fleetTypes: [0,1,2,7],
 				bgmMap: 99,
 				bgmDN: 50,
@@ -190,7 +189,7 @@ Operation Report:
 						},
 						friendFleet: ['anime','tsundere'],			
 						setupSpecial: function() {
-							let debuffed = MAPDATA[20].maps[1].debuffCheck(CHDATA.event.maps[1].debuff);
+							let debuffed = MAPDATA[99].maps[1].debuffCheck(CHDATA.event.maps[1].debuff);
 							let ships = FLEETS1[0].ships.concat(FLEETS1[1].ships);
 							if (CHDATA.sortie.fleetFriend) ships = ships.concat(CHDATA.sortie.fleetFriend.ships);
 							for (let ship of ships) {
@@ -201,10 +200,75 @@ Operation Report:
 						},
 						end: true,
 						boss: true,
-				},
+						}
+					}
+				}
 			}
 		},
-			0: {
+	20: {
+		name: 'Phase 1 Classic',
+		date: '2018-08-15',
+		diffMode: 1,
+		allowDiffs: [2],
+		allowFleets: [0],
+		bannerImg: 'assets/maps/20/banner1.png',
+		bannerImgAlt: 'assets/maps/20/banner2.png',
+		allowLBAS: true,
+		unlockDefault: 32,
+		transportCalc: function() { return 1; },
+		maps: {
+			1: {
+				name: '1-1',
+				nameT: 'Sea in Front of the Naval Base',
+				world: 1,
+				fleetTypes: [0],
+				bgmMap: 116,
+				bgmDN: 1,
+				bgmNN: 2,
+				bgmDB: 2,
+				bgmNB: 2,
+				bossnode: 3,
+				maphp: { 2: { 1: 1 } },
+				finalhp: { 2: 1 },
+				hpmode: -1,
+				nodes: {
+					'Start': {
+						type: 3,
+						x: 128,
+						y: 142,
+						route: 'A'
+					},
+					'A': {
+						type: 1,
+						x: 248,
+						y: 172,
+						compDiff: {
+							2: [1,2,3]
+						},
+						routeR: { 'B': .5, 'C': .5 }
+					},
+					'B': {
+						type: 1,
+						x: 373,
+						y: 90,
+						compDiff: {
+							2: [1,2,3]
+						},
+						end: true
+					},
+					'C': {
+						type: 1,
+						x: 352,
+						y: 246,
+						compDiff: {
+							2: [1,2,3,4]
+						},
+						end: true,
+						boss: true
+					},
+				}
+			},
+			2: {
 				name: '1-2',
 				nameT: 'Sea around the Nansei Islands',
 				world: 1,
