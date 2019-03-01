@@ -1015,7 +1015,7 @@ function chDoStartChecks() {
 		}
 	}
 	
-	if (WORLD == 20 && (CHDATA.fleets.supportN || CHDATA.fleets.supportB) && MAPDATA[WORLD].maps[MAPNUM].world != 5) { //special for classic
+	if (WORLD == 0 && (CHDATA.fleets.supportN || CHDATA.fleets.supportB) && MAPDATA[WORLD].maps[MAPNUM].world != 5) { //special for classic
 		errors.push('Support not allowed');
 	}
 	
@@ -1745,6 +1745,11 @@ function chClickedSortieRight() {
 	if (!MAPDATA[WORLD].maps[MAPNUM+1]) return;
 	$('#srtHPBar').css('animation','');
 	chLoadSortieInfo(MAPNUM+1);
+}
+
+function chSortieViewStrategy() {
+	if (MAPDATA[WORLD].maps[MAPNUM].strategy) alert(MAPDATA[WORLD].maps[MAPNUM].strategy);
+	else alert("No strategy description available.");
 }
 
 function chSortieStartChangeDiff() {
