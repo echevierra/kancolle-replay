@@ -1,68 +1,210 @@
 var MAPDATA = {
 	20: {
 		name: 'Phase 1 Classic',
-		date: '2018-08-15',
-		diffMode: 1,
-		allowDiffs: [2],
-		allowFleets: [0],
+		date: '2019-02-11',
+		diffMode: 2,
+		allowDiffs: [3],
+		allowFleets: [0,1,2,7],
 		bannerImg: 'assets/maps/20/banner1.png',
 		bannerImgAlt: 'assets/maps/20/banner2.png',
 		allowLBAS: true,
-		unlockDefault: 32,
+		newResupplyCosts: true,
+		overrideStats: {
+			1775: { HP: 700, FP: 300, AR: 288 },
+			1630: { HP: 700, FP: 250, AR: 228 },
+			1798: { AR: 318},
+			1602: { AR: 135, EQUIPS: [550,550,541,525] },
+		},
+		friendFleet: {
+					'anime': { voice: [426,141], ships: [
+						{ mid: 426, LVL: 99, FP: 59, TP: 88, AA: 58, AR: 56, LUK: 40, equips: [179,179,74] },
+						{ mid: 144, LVL: 99, FP: 73, TP: 93, AA: 54, AR: 52, LUK: 59,  equips: [122,122,179] },
+						{ mid: 434, LVL: 99, FP: 45, TP: 79, AA: 55, AR: 43, equips: [179,240,129] },
+						{ mid: 435, LVL: 99, FP: 46, TP: 80, AA: 54, AR: 33, equips: [179,240,129] },
+					] },
+					'tsundere' : { voice: [464,141], ships: [
+						{ mid: 464, LVL: 99, FP: 63, TP: 92, AA: 69, AR: 50, equips: [179,179,129] },
+						{ mid: 489, LVL: 99, FP: 68, TP: 89, AA: 59, AR: 57, equips: [122,122,101] },
+						{ mid: 231, LVL: 99, FP: 49, TP: 79, AA: 72, AR: 95, equips: [122,122,74] },
+					] },
+				},
 		transportCalc: function() { return 1; },
 		maps: {
 			1: {
 				name: '1-1',
-				nameT: 'Sea in Front of the Naval Base',
+				nameT: '1-1, But Harder',
 				world: 1,
-				fleetTypes: [0],
-				bgmMap: 116,
-				bgmDN: 1,
-				bgmNN: 2,
-				bgmDB: 2,
-				bgmNB: 2,
-				bossnode: 3,
-				maphp: { 2: { 1: 1 } },
-				finalhp: { 2: 1 },
-				hpmode: -1,
+				fleetTypes: [0,1,2,7],
+				bgmMap: 99,
+				bgmDN: 50,
+				bgmNN: 50,
+				bgmDB: 100,
+				bgmNB: 100,
+				bossnode: [2,3],
+				lbas: 3,
+				strategy: `Admiral, Abyssal Forces is arrving at high speed. Our approaching strategies would be to send striking force to the north. After the recon and surpressing attack from the striking force, we will deploy surface task force and carrier task force to obliterate the northern and southern abyssal forces. 
+Obtain Victory across the Tanakaland.
+Tips:
+* The usage of carrier is recommended for Northern part 1
+* Debuff is available in this map, please leave no enemies behind for safety
+* Some of enemies stat are balanced to adjust the difficulty
+* Remember to have fun.
+Operation Report:
+1. It seems, after we surpress the enemies Northern force with striking force, reinforcement has arrived, giving the 'retreat' and 'joint' order from HQ
+2. Striking force recon and surpression gave as report about Northern force weakness , we will use this information to increase our chance of winning
+3. After obliterating northern part, it seems to affect the southern force, leading them into confussion and we will not let this chance slip by!`,
+				parts: {
+					1: {
+						currentBoss: 'B',
+						fleetTypes: [0,7],
+						maphp: {
+							3: { 1: 2100 },
+						},
+						finalhp: {
+							3: 700,
+						},
+					},
+					2: {
+						currentBoss: 'C',
+						fleetTypes: [1,2],
+						maphp: {
+							3: { 1: 2500 },
+						},
+						finalhp: {
+							3: 800,
+						},
+					}
+				},
+				hiddenRoutes: {
+					1: {
+						images: [
+							{ name: '1_1.png', x: 0, y: 0 }
+						],
+						unlock: function(debuff) {
+							return CHDATA.event.maps[1].part == 2;
+						}
+					}
+				},
+				debuffCheck: function(debuff) {
+					if (!debuff) return false;
+					return debuff.B;
+				},
 				nodes: {
 					'Start': {
 						type: 3,
 						x: 128,
 						y: 142,
-						route: 'A'
+						showNoCompass: true,
+						routeC: function(ships) {
+							if (!CHDATA.event.maps[1].routes || CHDATA.event.maps[1].routes.indexOf(1) == -1) return 'A';
+							return 'A*';
+						}
 					},
 					'A': {
 						type: 1,
 						x: 248,
 						y: 172,
+						distance: 1,
+						replacedBy: 'A*',
+						night2: true,
+						subonly: true,
+						route: 'B',
 						compDiff: {
-							2: [1,2,3]
+							3: [1]
 						},
-						routeR: { 'B': .5, 'C': .5 }
+					},	
+					'A*': {
+						type: 1,
+						x: 248,
+						y: 172,
+						distance: 1,
+						hidden: 1,
+						raid: true,
+						compName: 'A',
+						compDiff: {
+							3: [2],
+						},
+						routeC: function(ships) {
+							if (CHDATA.fleets.combined == 1) return 'C';
+							return 'B*';
+							if (!CHDATA.event.maps[1].routes || CHDATA.event.maps[1].routes.indexOf(1) == -1) return 'B';
+							return 'B*';
+						}
 					},
 					'B': {
 						type: 1,
 						x: 373,
 						y: 90,
+						distance: 1,
+						replacedBy: 'B*',
+						nightToDay2: true,
 						compDiff: {
-							2: [1,2,3]
+							3: [1]
 						},
-						end: true
+						compDiffF: {
+							3: [2]
+						},
+						end: true,
+						boss: true,
+					},
+					'B*': {
+						type: 1,
+						x: 373,
+						y: 90,
+						distance: 1,
+						hidden: 1,
+						compName: 'B',
+						compDiff: {
+							3: [3]
+						},
+						end: true,
+						boss: true,
+						setupSpecial: function() {
+						if (CHDATA.event.maps[1].part == 2) {
+								for (let ship of FLEETS1[0].ships) {
+									ship.bonusSpecial = [{mod:1.15}];
+							for (let lbas of LBAS) lbas.bonusSpecial = [{mod:1.3}];
+							for (let ship of FLEETS2[0].ships.concat(FLEETS2[1].ships)) {
+								ship.EV *= .35;
+									}
+
+								}	
+							}
+						},
+						debuffGive: function() {
+							if (CHDATA.event.maps[1].part != 2) return;
+							if (CHDATA.temp.rank == 'S') CHDATA.event.maps[1].debuff.B = 1;
+						}
 					},
 					'C': {
 						type: 1,
 						x: 352,
 						y: 246,
+						distance: 1,
+						hidden: 1,
 						compDiff: {
-							2: [1,2,3,4]
+							3: [1]
+						},
+						compDiffF: {
+							3: [2]
+						},
+						friendFleet: ['anime','tsundere'],			
+						setupSpecial: function() {
+							let debuffed = MAPDATA[20].maps[1].debuffCheck(CHDATA.event.maps[1].debuff);
+							let ships = FLEETS1[0].ships.concat(FLEETS1[1].ships);
+							if (CHDATA.sortie.fleetFriend) ships = ships.concat(CHDATA.sortie.fleetFriend.ships);
+							for (let ship of ships) {
+								let baseMid = getBaseId(ship.mid);
+								if (debuffed)
+									ship.bonusSpecial = [{mod:1.5}];
+							}
 						},
 						end: true,
-						boss: true
-					},
-				}
-			},
-			2: {
+						boss: true,
+				},
+			}
+		},
+			0: {
 				name: '1-2',
 				nameT: 'Sea around the Nansei Islands',
 				world: 1,
