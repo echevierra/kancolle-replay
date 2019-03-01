@@ -102,6 +102,7 @@ var VOICES = {
 		damage1: "assets/voice/Fubuki-Minor_Damage_2.ogg",
 		damage2: "assets/voice/Fubuki-Minor_Damage_1.ogg",
 		damage3: "assets/voice/Fubuki-Major_Damage.ogg",
+		friend141: "assets/voice/FubukiKai-Battle_Start.ogg",
 	},
 	10: {
 		start: "assets/voice/Shirayuki-Battle_Start.ogg",
@@ -948,6 +949,7 @@ var VOICES = {
 		damage1: "assets/voice/Kasumi-Minor_Damage_1.ogg",
 		damage2: "assets/voice/KasumiKai2-Minor_Damage_2.ogg",
 		damage3: "assets/voice/Kasumi-Major_Damage.ogg",
+		friend141: "assets/voice/Kasumi-Battle_Start.ogg",
 	},
 	50: {
 		start: "assets/voice/Shimakaze-Battle_Start.ogg",
