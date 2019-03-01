@@ -1366,7 +1366,7 @@ function getEnemyComp(letter,mapdata,diff,lastdance) {
 	var comp = comps[Math.floor(Math.random()*comps.length)];
 	var compd;
 	if (WORLD == 20) {
-		let n = (mapdata.compName)? mapdata.compName : (mapdata.boss)? 'Boss' : letter;
+		let n = (mapdata.compName)? mapdata.compName : letter;
 		compd = ENEMYCOMPS['World '+MAPDATA[WORLD].maps[MAPNUM].world][MAPDATA[WORLD].maps[MAPNUM].name][n][comp];
 	} else {
 		let n = (mapdata.compName)? mapdata.compName : letter;
